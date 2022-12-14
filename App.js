@@ -11,10 +11,60 @@ const addButton = document.querySelector('.plus-button');
 const minusButton = document.querySelector('.minus-button');
 const equalsButton = document.querySelector('.equals-button');
 const clearButton = document.querySelector('.clear-button');
+const decimalButton = document.querySelector('.decimal-button');
 
 addButtonEventListener();
 
 function addButtonEventListener() {
+    addNumbersButtonEvent();
+    
+    multiplyButton.addEventListener('click', () => {
+        checkEmptyOperands(multiply, 'x');
+    });
+    divideButton.addEventListener('click', () => {
+        checkEmptyOperands(division, '/');
+    });
+    addButton.addEventListener('click', () => {
+        checkEmptyOperands(add, '+');
+    });
+    minusButton.addEventListener('click', () => {
+        checkEmptyOperands(subtract, '-');
+    });
+    
+    equalsButton.addEventListener('click', equalsButtonEvent);
+
+    clearButton.addEventListener('click', clear);
+};
+
+function checkEmptyOperands(newOperator, symbolDisplay) {
+    if (operand1 != undefined && operand2 != undefined) {
+        const result = operate(operator, operand1, operand2);
+        operand1 = result;
+        calculatorDisplay.textContent = result + ' ' + symbolDisplay;
+        operand2 = undefined;
+        operator = newOperator;
+    } else if (operand1 != undefined) {
+        operator = newOperator;
+        calculatorDisplay.textContent = operand1 + ' ' + symbolDisplay;
+    }
+};
+
+function equalsButtonEvent() {
+    if (operand1 != undefined && operand2 != undefined) {
+        if (operand2 == 0 && operator == division) {
+            clear();
+            alert("No dividing by 0!");
+        } else {
+            calculation = +operate(operator, operand1, operand2).toFixed(10);
+            calculatorDisplay.textContent = calculation;
+            operand1 = calculation;
+            operator = undefined;
+            operand2 = undefined;
+        }
+    }
+};
+
+function addNumbersButtonEvent() {
     buttonRow.forEach((element) => {
         const buttons = element.children;
         for (let i = 0; i < buttons.length; i++) {
@@ -42,49 +92,7 @@ function addButtonEventListener() {
             });
         }
     });
-    multiplyButton.addEventListener('click', () => {
-        checkEmptyOperands(multiply, 'x');
-    });
-    divideButton.addEventListener('click', () => {
-        checkEmptyOperands(division, '/');
-    });
-    addButton.addEventListener('click', () => {
-        checkEmptyOperands(add, '+');
-    });
-    minusButton.addEventListener('click', () => {
-        checkEmptyOperands(subtract, '-');
-    });
-    
-    equalsButton.addEventListener('click', () => {
-        if (operand1 != undefined && operand2 != undefined) {
-            if (operand2 == 0 && operator == division) {
-                clear();
-                alert("No dividing by 0!");
-            } else {
-                calculation = +operate(operator, operand1, operand2).toFixed(10);
-                calculatorDisplay.textContent = calculation;
-                operand1 = calculation;
-                operator = undefined;
-                operand2 = undefined;
-            }
-        }
-    });
-
-    clearButton.addEventListener('click', clear);
-};
-
-function checkEmptyOperands(newOperator, symbolDisplay) {
-    if (operand1 != undefined && operand2 != undefined) {
-        const result = operate(operator, operand1, operand2);
-        operand1 = result;
-        calculatorDisplay.textContent = result + ' ' + symbolDisplay;
-        operand2 = undefined;
-        operator = newOperator;
-    } else if (operand1 != undefined) {
-        operator = newOperator;
-        calculatorDisplay.textContent = operand1 + ' ' + symbolDisplay;
-    }
-};
+}
 
 function add(a, b) {
     return a + b;
