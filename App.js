@@ -5,9 +5,13 @@ const calculatorDisplay = document.querySelector('.calculator-display');
 buttonRow.forEach((element) => {
     const buttons = element.children;
     for (let i = 0; i < buttons.length; i++) {
-        const textValue = buttons[i].textContent;
+        const textValue = parseInt(buttons[i].textContent);
+        if (Number.isNaN(textValue)) {
+            continue;
+        }
         buttons[i].addEventListener('click', () => {
             display = textValue;
+            console.log(display);
             calculatorDisplay.textContent = textValue;
         });
     }
