@@ -43,18 +43,22 @@ function addButtonEventListener() {
         }
     });
     multiplyButton.addEventListener('click', () => {
+        checkEmptyOperands(multiply);
         operator = multiply;
         calculatorDisplay.textContent = operand1 + ' x'; 
     });
     divideButton.addEventListener('click', () => {
+        checkEmptyOperands(division);
         operator = division;
         calculatorDisplay.textContent = operand1 + ' /';
     });
     addButton.addEventListener('click', () => {
+        checkEmptyOperands(add);
         operator = add;
         calculatorDisplay.textContent = operand1 + ' +';
     });
     minusButton.addEventListener('click', () => {
+        checkEmptyOperands(subtract);
         operator = subtract;
         calculatorDisplay.textContent = operand1 + ' -';
     });
@@ -73,6 +77,16 @@ function addButtonEventListener() {
         operator = undefined;
         calculatorDisplay.textContent = "";
     });
+};
+
+function checkEmptyOperands(newOperator) {
+    if (operand1 != undefined && operand2 != undefined) {
+        const result = operate(operator, operand1, operand2);
+        operand1 = result;
+        calculatorDisplay.textContent = result;
+        operand2 = undefined;
+        operator = newOperator;
+    }
 };
 
 function add(a, b) {
