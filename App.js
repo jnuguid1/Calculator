@@ -54,6 +54,9 @@ function addButtonEventListener() {
     equalsButton.addEventListener('click', () => {
         calculation = operate(operator, operand1, operand2);
         calculatorDisplay.textContent = calculation;
+        operand1 = calculation;
+        operator = undefined;
+        operand2 = undefined;
     });
 
     clearButton.addEventListener('click', () => {
