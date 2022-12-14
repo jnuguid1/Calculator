@@ -83,8 +83,8 @@ function addNumbersButtonEvent() {
     buttonRow.forEach((element) => {
         const buttons = element.children;
         for (let i = 0; i < buttons.length; i++) {
-            const textValue = parseInt(buttons[i].textContent);
-            if (Number.isNaN(textValue)) {
+            const textValue = buttons[i].textContent;
+            if (Number.isNaN(parseInt(textValue))) {
                 continue;
             }
             buttons[i].addEventListener('click', () => {
@@ -94,7 +94,7 @@ function addNumbersButtonEvent() {
                     calculatorDisplay.textContent = textValue;
                 } else if (typeof operator == 'undefined') {
                     operand1 += textValue;
-                    calculatorDisplay.textContent = operand1;
+                    calculatorDisplay.textContent += textValue;
                 } else if (typeof operator != 'undefined' && typeof operand2 == 'undefined'){
                     operand2 = textValue;
                     calculatorDisplay.textContent += " " + textValue;
