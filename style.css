@@ -62,3 +62,8 @@ button {
     background-color: orange;
     border-color: orange;
 }
+
+button:disabled {
+    background-color: rgb(239,239,239);
+    color: black;
+}

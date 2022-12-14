@@ -34,16 +34,31 @@ function addButtonEventListener() {
     equalsButton.addEventListener('click', equalsButtonEvent);
 
     clearButton.addEventListener('click', clear);
+
+    decimalButton.addEventListener('click', decimalButtonEvent);
+};
+
+function decimalButtonEvent() {
+    if (operand2 == undefined && operand1 != undefined) {
+        operand1 += ".";
+        calculatorDisplay.textContent = operand1;
+        decimalButton.disabled = true;
+    } else if (operand2 != undefined) {
+        operand2 += ".";
+        calculatorDisplay.textContent += ".";
+        decimalButton.disabled = true;
+    }
 };
 
 function checkEmptyOperands(newOperator, symbolDisplay) {
     if (operand1 != undefined && operand2 != undefined) {
-        const result = operate(operator, operand1, operand2);
+        const result = +operate(operator, parseFloat(operand1), parseFloat(operand2)).toFixed(10);
         operand1 = result;
         calculatorDisplay.textContent = result + ' ' + symbolDisplay;
         operand2 = undefined;
         operator = newOperator;
     } else if (operand1 != undefined) {
+        decimalButton.disabled = false;
         operator = newOperator;
         calculatorDisplay.textContent = operand1 + ' ' + symbolDisplay;
     }
@@ -55,7 +70,7 @@ function equalsButtonEvent() {
             clear();
             alert("No dividing by 0!");
         } else {
-            calculation = +operate(operator, operand1, operand2).toFixed(10);
+            calculation = +operate(operator, parseFloat(operand1), parseFloat(operand2)).toFixed(10);
             calculatorDisplay.textContent = calculation;
             operand1 = calculation;
             operator = undefined;
@@ -78,15 +93,13 @@ function addNumbersButtonEvent() {
                     operand1 = textValue;
                     calculatorDisplay.textContent = textValue;
                 } else if (typeof operator == 'undefined') {
-                    operand1 += textValue.toString();
-                    operand1 = parseInt(operand1);
+                    operand1 += textValue;
                     calculatorDisplay.textContent = operand1;
                 } else if (typeof operator != 'undefined' && typeof operand2 == 'undefined'){
                     operand2 = textValue;
                     calculatorDisplay.textContent += " " + textValue;
                 } else {
-                    operand2 += textValue.toString();
-                    operand2 = parseInt(operand2);
+                    operand2 += textValue;
                     calculatorDisplay.textContent += textValue;
                 }
             });
@@ -119,4 +132,5 @@ function clear() {
     operand2 = undefined;
     operator = undefined;
     calculatorDisplay.textContent = "";
+    decimalButton.disabled = false;
 }
