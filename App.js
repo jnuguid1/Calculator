@@ -70,7 +70,7 @@ function addButtonEventListener() {
         }
     });
 
-    clearButton.addEventListener('click', clear());
+    clearButton.addEventListener('click', clear);
 };
 
 function checkEmptyOperands(newOperator, symbolDisplay) {
