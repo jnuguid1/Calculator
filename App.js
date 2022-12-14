@@ -24,12 +24,20 @@ function addButtonEventListener() {
             }
             buttons[i].addEventListener('click', () => {
                 display = textValue;
-                if (typeof operand1 == 'undefined') {
+                if (typeof operator == 'undefined' && typeof operand1 == 'undefined') {
                     operand1 = textValue;
                     calculatorDisplay.textContent = textValue;
-                } else {
+                } else if (typeof operator == 'undefined') {
+                    operand1 += textValue.toString();
+                    operand1 = parseInt(operand1);
+                    calculatorDisplay.textContent = operand1;
+                } else if (typeof operator != 'undefined' && typeof operand2 == 'undefined'){
                     operand2 = textValue;
                     calculatorDisplay.textContent += " " + textValue;
+                } else {
+                    operand2 += textValue.toString();
+                    operand2 = parseInt(operand2);
+                    calculatorDisplay.textContent += textValue;
                 }
             });
         }
