@@ -43,32 +43,26 @@ function addButtonEventListener() {
         }
     });
     multiplyButton.addEventListener('click', () => {
-        checkEmptyOperands(multiply);
-        operator = multiply;
-        calculatorDisplay.textContent = operand1 + ' x'; 
+        checkEmptyOperands(multiply, 'x');
     });
     divideButton.addEventListener('click', () => {
-        checkEmptyOperands(division);
-        operator = division;
-        calculatorDisplay.textContent = operand1 + ' /';
+        checkEmptyOperands(division, '/');
     });
     addButton.addEventListener('click', () => {
-        checkEmptyOperands(add);
-        operator = add;
-        calculatorDisplay.textContent = operand1 + ' +';
+        checkEmptyOperands(add, '+');
     });
     minusButton.addEventListener('click', () => {
-        checkEmptyOperands(subtract);
-        operator = subtract;
-        calculatorDisplay.textContent = operand1 + ' -';
+        checkEmptyOperands(subtract, '-');
     });
     
     equalsButton.addEventListener('click', () => {
-        calculation = operate(operator, operand1, operand2);
-        calculatorDisplay.textContent = calculation;
-        operand1 = calculation;
-        operator = undefined;
-        operand2 = undefined;
+        if (operand1 != undefined && operand2 != undefined) {
+            calculation = +operate(operator, operand1, operand2).toFixed(10);
+            calculatorDisplay.textContent = calculation;
+            operand1 = calculation;
+            operator = undefined;
+            operand2 = undefined;
+        }
     });
 
     clearButton.addEventListener('click', () => {
@@ -79,13 +73,16 @@ function addButtonEventListener() {
     });
 };
 
-function checkEmptyOperands(newOperator) {
+function checkEmptyOperands(newOperator, symbolDisplay) {
     if (operand1 != undefined && operand2 != undefined) {
         const result = operate(operator, operand1, operand2);
         operand1 = result;
-        calculatorDisplay.textContent = result;
+        calculatorDisplay.textContent = result + ' ' + symbolDisplay;
         operand2 = undefined;
         operator = newOperator;
+    } else if (operand1 != undefined) {
+        operator = newOperator;
+        calculatorDisplay.textContent = operand1 + ' ' + symbolDisplay;
     }
 };
 
